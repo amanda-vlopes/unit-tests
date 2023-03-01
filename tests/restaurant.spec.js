@@ -67,23 +67,38 @@ describe('10 - Implemente a função `createMenu`, bem como seus casos de teste'
     // - senão, deve exibir a mensagem "Item indisponível" e não adicionar nada ao array
     // Ex: obj.order('coxinha') --> ['coxinha']
     // Ex: obj.order('picanha') --> Exibe "Item indisponível"
-
-    expect(createMenu(pedido).order('coxinha')).toEqual(['coxinha']);
-    expect(createMenu(pedido).order('hamburguer')).toEqual('Item indisponível');
+    let meuMenu = createMenu(pedido);
+    meuMenu.order('coxinha');
+    expect(meuMenu.consumption).toEqual(['coxinha']);
+    meuMenu = createMenu(pedido);
+    expect(meuMenu.order('hamburguer')).toEqual('Item indisponível');
 
 
     // 8: Faça a implementação do item 8 do README no arquivo src/restaurant.js.
 
     // 9: Verifique se, ao adicionar três pedidos em sequência, dentre bebidas e comidas, o array `objetoRetornado.consumption` contém os itens pedidos.
+    meuMenu = createMenu(pedido);
+    meuMenu.order('coxinha');
+    meuMenu.order('agua');
+    meuMenu.order('cerveja');
 
-    createMenu(pedido).order('coxinha');
-    createMenu(pedido).order('agua');
-    createMenu(pedido).order('cerveja');
-    expect(createMenu(pedido).consumption).toEqual(['coxinha', 'agua', 'cerveja']);
+    expect(meuMenu.consumption).toEqual(['coxinha', 'agua', 'cerveja']);
 
     // 10: Verifique se a função `order` aceita que pedidos repetidos sejam acrescidos a `consumption`.
 
+    meuMenu = createMenu(pedido);
+    meuMenu.order('coxinha');
+    meuMenu.order('coxinha');
+
+    expect(meuMenu.consumption).toEqual(['coxinha', 'coxinha']);
+
     // 11: Verifique se, ao chamar `objetoRetornado.pay()`, retorna-se a soma dos preços de tudo que foi pedido, acrescido de 10%, conforme registrado em `objetoRetornado.consumption`.
+
+    meuMenu.order('cerveja');
+    const valorTotal = ((3.90 * 2) + 6.90) * 1.1;
+    
+    expect(meuMenu.pay()).toBeCloseTo(valorTotal);
+
 
     // 12: Faça a implementação do item 12 do README no arquivo src/restaurant.js.
 

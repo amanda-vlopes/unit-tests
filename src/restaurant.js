@@ -47,24 +47,24 @@ const createMenu = (objeto) => {
   restaurante.order = (string) => {
     const food = Object.keys(objeto.food);
     const drinks = Object.keys(objeto.drinks);
-    if (food.includes(`${string}`) || drinks.includes(`${string}`)) {
-      console.log('Estou entrando aqui');
+    if (food.includes(string) || drinks.includes(string)) {
       restaurante.consumption.push(string);
-      // console.log(restaurante.consumption);
-      return restaurante.consumption;
-    }
+    } else {
       return 'Item indisponível';
+    }
   };
-  // function addOrder(string) {
-  //   const chaves = Object.values(objeto);
-  //   for (let index = 0; index < chaves.length; index += 1) {
-  //     if (Object.keys(chaves[index]).includes(`${string}`)) {
-  //       arrayPedido.push(string);
-  //       return arrayPedido;
-  //     }      
-  //   }
-  //   return 'Item indisponível';
-  // }
+  restaurante.pay = () => {
+    let consumo = restaurante.consumption;
+    let valorTotal = 0;
+    for (let index = 0; index < consumo.length; index += 1) {
+      if (Object.keys(objeto.food).includes(consumo[index])) {
+        valorTotal += objeto.food[consumo[index]];
+      } else if (Object.keys(objeto.drinks).includes(consumo[index])) {
+        valorTotal += objeto.drinks[consumo[index]];
+      }
+    }
+    return (valorTotal * 1.1);
+  };
   return restaurante;
 };
 
@@ -72,19 +72,18 @@ const pedido = {
   food: { coxinha: 3.90, sanduiche: 9.90 },
   drinks: { agua: 3.90, cerveja: 6.90 },
 };
+const food = 'food.coxinha';
+// console.log(pedido[food]);
+const meuMenu = createMenu(pedido);
+meuMenu.order('coxinha');
+meuMenu.order('coxinha');
+console.log(meuMenu.pay());
 
 // console.log(Object.keys((createMenu(pedido)).fetchMenu()));
 
 // Faça o item 5 no arquivo tests/restaurant.spec.js
 
 // 6: Adicione ao objeto retornado por `createMenu()` uma chave de nome `consumption` que, como valor inicial, tem um array vazio.
-
-// console.log(createMenu(pedido).order('agua'));
-// console.log(createMenu(pedido).order('cerveja'));
-createMenu(pedido).order('coxinha');
-// console.log(createMenu(pedido).consumption);
-
-console.log(createMenu(pedido).consumption);
 
 // Faça o item 7 no arquivo tests/restaurant.spec.js
 
@@ -101,5 +100,35 @@ console.log(createMenu(pedido).consumption);
 // - fará a soma do preço desses itens;
 // - retornará o valor somado acrescido de 10%.
 // DICA: para isso, você precisará percorrer tanto o objeto da chave `food` quanto o objeto da chave `drink`.
+
+// Testes: 
+
+  // function addOrder(string) {
+  //   const chaves = Object.values(objeto);
+  //   for (let index = 0; index < chaves.length; index += 1) {
+  //     if (Object.keys(chaves[index]).includes(`${string}`)) {
+  //       arrayPedido.push(string);
+  //       return arrayPedido;
+  //     }      
+  //   }
+  //   return 'Item indisponível';
+  // }
+
+// const createMenu = (objeto) => {
+//   const restaurante = { fetchMenu: () => objeto };
+//   restaurante.consumption = [];
+//   restaurante.order = (string) => {
+//     const chave1 = objeto.food[string];
+//     const chave2 = objeto.drinks[string];
+//     if (!chave1 && !chave2) {
+//       console.log('Estou entrando aqui');
+//       // return restaurante.consumption;
+//       return 'Item indisponível';
+//     }
+//     restaurante.consumption.push(string);
+//     return restaurante.consumption;
+//   };
+//   return restaurante;
+// };
 
 module.exports = createMenu;
