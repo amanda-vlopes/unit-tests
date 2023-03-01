@@ -68,9 +68,18 @@ describe('10 - Implemente a função `createMenu`, bem como seus casos de teste'
     // Ex: obj.order('coxinha') --> ['coxinha']
     // Ex: obj.order('picanha') --> Exibe "Item indisponível"
 
+    expect(createMenu(pedido).order('coxinha')).toEqual(['coxinha']);
+    expect(createMenu(pedido).order('hamburguer')).toEqual('Item indisponível');
+
+
     // 8: Faça a implementação do item 8 do README no arquivo src/restaurant.js.
 
     // 9: Verifique se, ao adicionar três pedidos em sequência, dentre bebidas e comidas, o array `objetoRetornado.consumption` contém os itens pedidos.
+
+    createMenu(pedido).order('coxinha');
+    createMenu(pedido).order('agua');
+    createMenu(pedido).order('cerveja');
+    expect(createMenu(pedido).consumption).toEqual(['coxinha', 'agua', 'cerveja']);
 
     // 10: Verifique se a função `order` aceita que pedidos repetidos sejam acrescidos a `consumption`.
 

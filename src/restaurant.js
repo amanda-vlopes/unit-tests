@@ -42,7 +42,30 @@
 //  { fetchMenu: () => objetoPassadoPorParametro }.
 
 const createMenu = (objeto) => {
-  return { fetchMenu: () => objeto, consumption: [] };
+  const restaurante = { fetchMenu: () => objeto };
+  restaurante.consumption = [];
+  restaurante.order = (string) => {
+    const food = Object.keys(objeto.food);
+    const drinks = Object.keys(objeto.drinks);
+    if (food.includes(`${string}`) || drinks.includes(`${string}`)) {
+      console.log('Estou entrando aqui');
+      restaurante.consumption.push(string);
+      // console.log(restaurante.consumption);
+      return restaurante.consumption;
+    }
+      return 'Item indisponível';
+  };
+  // function addOrder(string) {
+  //   const chaves = Object.values(objeto);
+  //   for (let index = 0; index < chaves.length; index += 1) {
+  //     if (Object.keys(chaves[index]).includes(`${string}`)) {
+  //       arrayPedido.push(string);
+  //       return arrayPedido;
+  //     }      
+  //   }
+  //   return 'Item indisponível';
+  // }
+  return restaurante;
 };
 
 const pedido = {
@@ -56,7 +79,12 @@ const pedido = {
 
 // 6: Adicione ao objeto retornado por `createMenu()` uma chave de nome `consumption` que, como valor inicial, tem um array vazio.
 
-console.log(createMenu());
+// console.log(createMenu(pedido).order('agua'));
+// console.log(createMenu(pedido).order('cerveja'));
+createMenu(pedido).order('coxinha');
+// console.log(createMenu(pedido).consumption);
+
+console.log(createMenu(pedido).consumption);
 
 // Faça o item 7 no arquivo tests/restaurant.spec.js
 
